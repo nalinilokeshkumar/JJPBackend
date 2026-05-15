@@ -1,0 +1,42 @@
+@csrf_exempt
+@api_view(['PUT'])
+def update_job(request, id):
+
+
+    user_id = request.session.get('user_id')
+    if not user_id:
+        return Response({"msg": "Login Required"})
+
+ 
+    try:
+        check_jwt(request)
+    except Exception as e:
+        return Response({"msg": str(e)})
+
+
+    job = get_object_or_404(Job, id=id)
+
+
+    if job.user.id != user_id:
+        return Response({"msg": "Not Allowed"})
+
+    data = request.data.copy()
+    data['user'] = user_id
+
+    serializer = JobSerializer(job, data=data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({"msg": "Updated"})
+    return Response(serializer.errors)
+
+# @api_view(['DELETE'])
+# def delete_job(request, id):
+#     job = Job.objects.get(id=id)
+
+#     user_id = request.session.get('user_id')
+
+#     if job.user.id != user_id:
+#         return Response({"msg": "Not Allowed"})
+
+#     job.delete()
+#     return Response({"msg": "Deleted"})
