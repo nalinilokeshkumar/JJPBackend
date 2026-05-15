@@ -24,9 +24,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-%ec4_z-9om)um3bj*08v7jf9_2ct69jcu46309h**%cp8#i_u0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+ DEBUG = False
 
-ALLOWED_HOSTS = []
+
+# ALLOWED_HOSTS = []
+ ALLOWED_HOSTS = ["*"]
+
 
 
 # Application definition
@@ -80,23 +84,23 @@ WSGI_APPLICATION = 'JJPBackend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'nalinijobportal',
-        'USER': 'root',
-        'PASSWORD': 'nachu', #nexila
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'nalinijobportal',
+#         'USER': 'root',
+#         'PASSWORD': 'nachu', #nexila
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
