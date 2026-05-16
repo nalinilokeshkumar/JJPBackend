@@ -9,24 +9,24 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ValidationError
 
 
-from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.exceptions import AuthenticationFailed
+# from rest_framework_simplejwt.authentication import JWTAuthentication
+# from rest_framework.exceptions import AuthenticationFailed
 
-def check_jwt(request):
-    auth = JWTAuthentication()
+# def check_jwt(request):
+#     auth = JWTAuthentication()
 
-    header = request.headers.get('Authorization')
-    if not header:
-        raise AuthenticationFailed("Token Required")
+#     header = request.headers.get('Authorization')
+#     if not header:
+#         raise AuthenticationFailed("Token Required")
 
-    try:
-        raw_token = header.split()[1]
-    except:
-        raise AuthenticationFailed("Invalid Token Format")
+#     try:
+#         raw_token = header.split()[1]
+#     except:
+#         raise AuthenticationFailed("Invalid Token Format")
 
-    auth.get_validated_token(raw_token)
+#     auth.get_validated_token(raw_token)
 
-    return True
+#     return True
 
 
     
@@ -102,27 +102,44 @@ def patch_job(request, id):
 
 
 
-
 @api_view(['DELETE'])
 def delete_job(request, id):
 
     user_id = request.session.get('user_id')
+
     if not user_id:
         return Response({"msg": "Login Required"})
 
-    try:
-        check_jwt(request)
-    except Exception as e:
-        return Response({"msg": str(e)})
-
     job = get_object_or_404(Job, id=id)
-
 
     if job.user.id != user_id:
         return Response({"msg": "Not Allowed"})
 
     job.delete()
+
     return Response({"msg": "Deleted"})
+
+
+# @api_view(['DELETE'])
+# def delete_job(request, id):
+
+#     user_id = request.session.get('user_id')
+#     if not user_id:
+#         return Response({"msg": "Login Required"})
+
+#     try:
+#         check_jwt(request)
+#     except Exception as e:
+#         return Response({"msg": str(e)})
+
+#     job = get_object_or_404(Job, id=id)
+
+
+#     if job.user.id != user_id:
+#         return Response({"msg": "Not Allowed"})
+
+#     job.delete()
+#     return Response({"msg": "Deleted"})
 
 
 from django.core.exceptions import ValidationError

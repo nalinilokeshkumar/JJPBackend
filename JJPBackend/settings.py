@@ -21,7 +21,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%ec4_z-9om)um3bj*08v7jf9_2ct69jcu46309h**%cp8#i_u0'
+# SECRET_KEY = 'django-insecure-%ec4_z-9om)um3bj*08v7jf9_2ct69jcu46309h**%cp8#i_u0'
+SECRET_KEY = os.environ.get("SECRET_KEY")
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
@@ -146,18 +148,20 @@ SESSION_SAVE_EVERY_REQUEST = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5500",
+    "https://njp-nalinijobportal.vercel.app"
     
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:5500",
+    "https://njp-nalinijobportal.vercel.app"
     
 ]
 # settings.py
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
  # 'rest_framework_simplejwt.authentication.JWTAuthentication',
-from datetime import timedelta
+# from datetime import timedelta
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -166,7 +170,14 @@ REST_FRAMEWORK = {
     ),
 }
 
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(hours=168),
-    'AUTH_HEADER_TYPES': ('Bearer',),
-}
+# SIMPLE_JWT = {
+#     'ACCESS_TOKEN_LIFETIME': timedelta(hours=168),
+#     'AUTH_HEADER_TYPES': ('Bearer',),
+# }
+SESSION_COOKIE_SAMESITE = "None"
+SESSION_COOKIE_SECURE = True
+
+CSRF_COOKIE_SAMESITE = "None"
+CSRF_COOKIE_SECURE = True
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
